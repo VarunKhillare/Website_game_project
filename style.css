@@ -16,6 +16,18 @@ body, html {
     border-radius: 10px;
     z-index: 1000;
   }
+
+  .balloon-thread {
+    position: absolute;
+    bottom: -49px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65px;
+    height: 90px;
+    pointer-events: none;
+  }
+  
+  
   
   
   #game-container {
@@ -74,4 +86,9 @@ body, html {
     transition: transform 0.1s;
     z-index: 10;
   }
+
+
+  
+  
+
   

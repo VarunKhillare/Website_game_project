@@ -5,6 +5,13 @@ let balloonYOffset = 90;
 const burstSound = new Audio("Graphics/burst.mp3");
 let burstCount = 0;
 
+const pumpSound = new Audio('Graphics/pumpsound.mp3');
+pumpSound.volume = 0.6; // Optional: adjust volume
+
+
+
+
+
 
 
 document.getElementById("handle").addEventListener("click", () => {
@@ -27,6 +34,10 @@ document.getElementById("handle").addEventListener("click", () => {
   // Move balloon upward after each press
   currentBalloon.style.top = `${pumpRect.top + balloonYOffset}px`;
   balloonYOffset -= 10;
+
+  pumpSound.currentTime = 0; // rewind sound if triggered quickly again
+pumpSound.play();
+
 
   // Inflate stages
   if (pressCount === 1) {
@@ -64,6 +75,12 @@ function createBalloon(pumpRect) {
 
   balloon.appendChild(balloonImg);
   balloon.appendChild(letter);
+  // Attach thread when balloon is released
+const thread = document.createElement("img");
+thread.src = "Graphics/thread.png"; 
+thread.className = "balloon-thread";
+
+  balloon.appendChild(thread);
 
   balloon.style.position = "absolute";
   balloon.style.left = `${pumpRect.left - 20}px`;
@@ -76,18 +93,11 @@ function createBalloon(pumpRect) {
   balloon.addEventListener("click", () => {
     burstSound.play();
   
-    // Burst animation
-    const burst = document.createElement("img");
-    burst.src = "Graphics/burst.png";
-    burst.style.position = "absolute";
-    burst.style.width = "60px";
-    burst.style.left = `${balloon.offsetLeft}px`;
-    burst.style.top = `${balloon.offsetTop}px`;
-    document.body.appendChild(burst);
-    setTimeout(() => burst.remove(), 300);
+    
   
     // Remove the balloon
     balloon.remove();
+
   
     // Increment and update the burst counter
     burstCount++;
@@ -114,6 +124,9 @@ function scaleBalloon(balloon, scaleValue) {
     fill: "forwards"
   });
 }
+
+
+
 
 function flyBalloon(balloon) {
   const angle = Math.random() * 2 * Math.PI;
